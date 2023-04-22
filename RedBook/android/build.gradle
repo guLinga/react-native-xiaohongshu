@@ -11,8 +11,12 @@ buildscript {
         ndkVersion = "23.1.7779620"
     }
     repositories {
+        maven{
+            allowInsecureProtocol true
+            url "http://maven.aliyun.com/nexus/content/groups/public/"
+        }
         google()
-        mavenCentral()
+//        mavenCentral()
     }
     dependencies {
         classpath("com.android.tools.build:gradle:7.3.1")
