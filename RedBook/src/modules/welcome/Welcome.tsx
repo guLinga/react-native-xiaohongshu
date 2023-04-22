@@ -6,8 +6,9 @@ import {
 } from "react-native"
 import {useNavigation} from '@react-navigation/native'
 
-import iconMainLogo from '../../assets/icon_main_logo.png'
 import { StackNavigationProp } from '@react-navigation/stack';
+import { load } from '../../utils/Storage';
+import iconMainLogo from '../../assets/icon_main_logo.png'
 
 export default function Welcome() {
 
@@ -15,12 +16,25 @@ export default function Welcome() {
 
   useEffect(()=>{
     setTimeout(()=>{
-      startLogin();
+      getUserInfo();
     },3000)
   },[])
 
+  const getUserInfo =async () => {
+    const cacheUserInfo = await load('userInfo');
+    if(cacheUserInfo && JSON.parse(cacheUserInfo)){
+      startHome();
+    }else{
+      startLogin();
+    }
+  }
+
   const startLogin = () => {
     navigation.replace('Login');
+  }
+
+  const startHome = () => {
+    navigation.replace('HomeTab');
   }
 
   return (
