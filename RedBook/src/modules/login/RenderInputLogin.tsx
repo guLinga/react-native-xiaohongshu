@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { StackNavigationProp } from "@react-navigation/stack";
 import {useNavigation} from '@react-navigation/native'
-import { Image, LayoutAnimation, Linking, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Image, LayoutAnimation, Linking, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native";
 
 import { AllStyles } from './Login';
 import { props } from './RenderQuickLogin'
@@ -15,6 +15,7 @@ import iconSelected from '../../assets/icon_selected.png'
 import iconWx from '../../assets/icon_wx.png'
 import iconQq from '../../assets/icon_qq.webp'
 import iconCloseModal from '../../assets/icon_close_modal.png'
+import UserStore from "../../stores/UserStore";
 
 // 账号密码登录
 export default function RenderInputLogin({setLoginType}:props){
@@ -30,6 +31,18 @@ export default function RenderInputLogin({setLoginType}:props){
   const canLogin = useMemo(()=>{
     return phone.length == 11 && pwd.length == 6 && check;
   },[phone,pwd,check])
+
+  // 登录
+  const onLoginPress =async () => {
+    if(!canLogin)return;
+    UserStore.requestLogin(phone,pwd,(success)=>{
+      if(success){
+        navigation.replace("HomeTab");
+      }else{
+        ToastAndroid.show("登录失败，请检查用户名和密码",ToastAndroid.LONG);
+      }
+    });
+  }
 
   return (
     <View style={styles.root}>
@@ -96,10 +109,7 @@ export default function RenderInputLogin({setLoginType}:props){
       <TouchableOpacity
         style={canLogin ? styles.loginButton : styles.loginButtonDissable}
         activeOpacity={canLogin ? 0.7 : 1}
-        onPress={()=>{
-          if(!canLogin)return;
-          navigation.replace("HomeTab")
-        }}
+        onPress={onLoginPress}
       >
         <Text style={styles.loginTxt}>登录</Text>
       </TouchableOpacity>
