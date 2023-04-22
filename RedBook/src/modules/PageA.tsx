@@ -1,0 +1,27 @@
+import React from 'react'
+import { View, Text, Button } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack';
+
+export default function PageA() {
+
+  const navigation = useNavigation<StackNavigationProp<any>>();
+
+  return (
+    <View style={{
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'white',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}>
+      <Text style={{fontSize: 30}}>123</Text>
+      <Button
+        title='点击'
+        onPress={()=>{
+          navigation.push('PageB');
+        }}
+      />
+    </View>
+  )
+}
