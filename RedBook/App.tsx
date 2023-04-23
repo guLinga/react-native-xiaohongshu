@@ -11,7 +11,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 // import PageB from './src/modules/PageB';
 import Login from './src/modules/login/Login';
 import Welcome from './src/modules/welcome/Welcome';
-import HomeTab from './src/modules/mainTab/MainTab';
+import MainTab from './src/modules/mainTab/MainTab';
 
 const Stack = createStackNavigator();
 
@@ -62,8 +62,8 @@ function App(){
             }}
           />
           <Stack.Screen
-            name='HomeTab'
-            component={HomeTab}
+            name='MainTab'
+            component={MainTab}
             options={{
               headerShown: false,
               ...TransitionPresets.SlideFromRightIOS// 跳转页面动画

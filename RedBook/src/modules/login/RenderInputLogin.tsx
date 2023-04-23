@@ -37,7 +37,7 @@ export default function RenderInputLogin({setLoginType}:props){
     if(!canLogin)return;
     UserStore.requestLogin(phone,pwd,(success)=>{
       if(success){
-        navigation.replace("HomeTab");
+        navigation.replace("MainTab");
       }else{
         ToastAndroid.show("登录失败，请检查用户名和密码",ToastAndroid.LONG);
       }
