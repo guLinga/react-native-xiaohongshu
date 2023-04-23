@@ -11,7 +11,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 // import PageB from './src/modules/PageB';
 import Login from './src/modules/login/Login';
 import Welcome from './src/modules/welcome/Welcome';
-import HomeTab from './src/modules/home/HomeTab';
+import HomeTab from './src/modules/mainTab/MainTab';
 
 const Stack = createStackNavigator();
 
