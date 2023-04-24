@@ -37,6 +37,16 @@ export class LoginService {
 
 const WHITE_LIST = [
     {
+        name: '17837363249',
+        nickName: '1514',
+        pwd: '111111',
+        sex: 'male',
+        redBookId: 118302850,
+        avatar: `/avatar/avatar_39.png`,
+        location: '河南',
+        desc: 'desc',
+    },
+    {
         name: '18751609896',
         nickName: '大公爵',
         pwd: '123456',
