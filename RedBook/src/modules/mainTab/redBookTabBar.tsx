@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
+import { launchImageLibrary } from 'react-native-image-picker'
 
 import iconTabPublish from '../../assets/icon_tab_publish.png'
 
@@ -8,19 +9,38 @@ export default function RedBookTabBar({state, descriptors,navigation}:BottomTabB
 
   const {routes,index} = state;
 
+  const onPulishPress = () => {
+    launchImageLibrary({
+      mediaType: 'photo',
+      quality: 1,
+      includeBase64: true
+    },(res)=>{
+      const {assets} = res;
+      if(!assets?.length)return;
+      const {
+        uri, width, height, fileName, fileSize, type
+      } = assets[0];
+      console.log(
+        `uri=${uri},width=${width}
+        ,height=${height}
+        ,fileName=${fileName}
+        ,fileSize=${fileSize}
+        ,type=${type}`
+      );
+    })
+  }
+
   return (
     <View style={styles.tabBarContainer}>
       {routes.map((route,i)=>{
-        const {options} = (descriptors as any)[route.key]
+        const {options} = descriptors[route.key]
         const label = options.title;
         const isFocused = index === i;
         if(i == 2){
           return <TouchableOpacity
           key={label}
           style={styles.tabItem}
-          onPress={()=>{
-            
-          }}
+          onPress={onPulishPress}
           >
             <Image style={styles.publishImg} source={iconTabPublish} />
           </TouchableOpacity>
@@ -46,7 +66,7 @@ export default function RedBookTabBar({state, descriptors,navigation}:BottomTabB
 const styles = StyleSheet.create({
   tabBarContainer: {
     width: '100%',
-    height: 56,
+    height: 52,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'white'
@@ -59,7 +79,7 @@ const styles = StyleSheet.create({
   },
   publishImg: {
     width: 58,
-    height: 40,
+    height: 42,
     resizeMode: 'contain'
   }
 })
