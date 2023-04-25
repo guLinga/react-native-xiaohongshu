@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { StackNavigationProp } from "@react-navigation/stack";
 import {useNavigation} from '@react-navigation/native'
 import { Image, LayoutAnimation, Linking, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native";
@@ -15,19 +15,28 @@ import iconSelected from '../../assets/icon_selected.png'
 import iconWx from '../../assets/icon_wx.png'
 import iconQq from '../../assets/icon_qq.webp'
 import iconCloseModal from '../../assets/icon_close_modal.png'
-import UserStore from "../../stores/UserStore";
+import { requestLogin, state } from '../../stores/UserStore';
+import { useDispatch, useSelector } from 'react-redux';
 
 // 账号密码登录
 export default function RenderInputLogin({setLoginType}:props){
 
   const navigation = useNavigation<StackNavigationProp<any>>();
+  const dispatch = useDispatch<any>();
+  const user = useSelector(state);
 
   const [eyeOpen,setEyeOpen] = useState<boolean>(true);
   const [check,setCheck] = useState<boolean>(false);
-
   const [phone, setPhone] = useState<string>("");
   const [pwd, setPwd] = useState<string>("");
 
+  // 登录成功后跳转页面
+  useEffect(()=>{
+    if(user.state)
+    navigation.replace("MainTab");
+  },[user.state])
+
+  // 判断账号密码长度和是否阅读并同意用户协议
   const canLogin = useMemo(()=>{
     return phone.length == 11 && pwd.length == 6 && check;
   },[phone,pwd,check])
@@ -35,13 +44,8 @@ export default function RenderInputLogin({setLoginType}:props){
   // 登录
   const onLoginPress =async () => {
     if(!canLogin)return;
-    UserStore.requestLogin(phone,pwd,(success)=>{
-      if(success){
-        navigation.replace("MainTab");
-      }else{
-        ToastAndroid.show("登录失败，请检查用户名和密码",ToastAndroid.LONG);
-      }
-    });
+    console.log('登录');
+    dispatch(requestLogin({name:phone,pwd}));
   }
 
   return (
