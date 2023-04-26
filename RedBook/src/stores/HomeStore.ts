@@ -29,7 +29,7 @@ const HomeStore = createSlice({
   reducers: {
     // 修改 refreshing 为 true
     modifyRefreshing(state){
-      console.log('modify');
+      // console.log('modify');
       state.refreshing = true;
     },
     // 重置 page
@@ -40,7 +40,7 @@ const HomeStore = createSlice({
   extraReducers(builder){
     // 首页列表成功
     builder.addCase(requestHomeList.fulfilled,(state,action)=>{
-      console.log('success',state);
+      // console.log('success',state);
       if(state.page === 1){
         state.homeList = action.payload;
       }else{
@@ -51,7 +51,7 @@ const HomeStore = createSlice({
     })
     // 首页列表失败
     builder.addCase(requestHomeList.rejected,(state,action)=>{
-      console.log('error',state,action.payload);
+      // console.log('error',state,action.payload);
       state.refreshing = false;
     })
   }
