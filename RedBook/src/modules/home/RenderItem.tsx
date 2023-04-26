@@ -1,6 +1,8 @@
 import React from 'react'
 import { View, Dimensions, StyleSheet, Image, Text } from 'react-native';
 
+import ResizeImage from '../../components/ResizeImage';
+
 import iconHeader from '../../assets/icon_heart.png'
 import iconHeartEmpty from '../../assets/icon_heart_empty.png'
 
@@ -9,7 +11,7 @@ const {width} = Dimensions.get('window')
 export default function RenderItem({item,index}:{item:ArticleSimple,index:number}) {
   return (
     <View style={styles.item}>
-      <Image style={styles.itemImage} source={{uri: item.image}} />
+      <ResizeImage uri={item.image} />
       <Text style={styles.titleTxt}>{item.title}</Text>
       <View style={styles.nameLayout}>
         <Image style={styles.avatarImg} source={{uri: item.avatarUrl}} />
@@ -29,11 +31,6 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     borderRadius: 8,
     overflow: 'hidden'
-  },
-  itemImage: {
-    width: '100%',
-    height: 250,
-    resizeMode: 'cover'
   },
   titleTxt: {
     fontSize: 14,
