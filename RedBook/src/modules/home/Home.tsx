@@ -1,11 +1,12 @@
 import React,{useEffect} from 'react'
-import { View, StyleSheet, FlatList } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { homeState } from '../../stores/HomeStore';
 import { requestHomeList, resetPage } from '../../stores/HomeStore';
 import RenderItem from './RenderItem';
 import FlowList from '../../components/FlowList/FlowList';
+import Heart from '../../components/Heart';
 
 export default function Home() {
   
@@ -27,6 +28,10 @@ export default function Home() {
     dispatch(requestHomeList());
   }
 
+  const Footer = () => {
+    return <Text style={styles.footerTxt}>没有更多数据了</Text>
+  }
+
   return (
     <View style={styles.root}>
       <FlowList
@@ -39,6 +44,7 @@ export default function Home() {
         onRefresh={refreshNewData}// 下拉刷新
         onEndReachedThreshold={0.1}// 触底加载
         onEndReached={loadMoreData}// 触底加载
+        ListFooterComponent={<Footer/>}
       />
     </View>
   )
@@ -58,5 +64,8 @@ const styles = StyleSheet.create({
   flatList: {
     width: '100%',
     height: '100%'
+  },
+  footerTxt: {
+    textAlign: 'center'
   }
 })

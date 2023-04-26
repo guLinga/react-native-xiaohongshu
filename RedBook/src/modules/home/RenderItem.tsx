@@ -2,9 +2,7 @@ import React from 'react'
 import { View, Dimensions, StyleSheet, Image, Text } from 'react-native';
 
 import ResizeImage from '../../components/ResizeImage';
-
-import iconHeader from '../../assets/icon_heart.png'
-import iconHeartEmpty from '../../assets/icon_heart_empty.png'
+import Heart from '../../components/Heart';
 
 const {width} = Dimensions.get('window')
 
@@ -16,7 +14,9 @@ export default function RenderItem({item,index}:{item:ArticleSimple,index:number
       <View style={styles.nameLayout}>
         <Image style={styles.avatarImg} source={{uri: item.avatarUrl}} />
         <Text style={styles.nameTxt}>{item.userName}</Text>
-        <Image style={styles.heart} source={iconHeartEmpty} />
+        <Heart value={item.isFavorite} onValueChange={(value)=>{
+          console.log(value);
+        }} />
         <Text style={styles.countTxt}>{item.favoriteCount}</Text>
       </View>
     </View>
@@ -55,11 +55,6 @@ const styles = StyleSheet.create({
     color: "#999",
     marginLeft: 4,
     flex: 1
-  },
-  heart: {
-    width: 20,
-    height: 20,
-    resizeMode: 'contain'
   },
   countTxt: {
     fontSize: 14,
