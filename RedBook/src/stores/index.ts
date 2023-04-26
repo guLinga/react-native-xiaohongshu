@@ -2,9 +2,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import UserStore from "./UserStore";
 import HomeList from './HomeStore';
 
-export default configureStore({
+const store = configureStore({
   reducer: {
     users: UserStore,
     home: HomeList
   }
 })
+export default store;
