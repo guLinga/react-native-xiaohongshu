@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { homeState } from '../../stores/HomeStore';
 import { requestHomeList, resetPage } from '../../stores/HomeStore';
 import RenderItem from './RenderItem';
+import FlowList from '../../components/FlowList/FlowList';
 
 export default function Home() {
   
@@ -28,7 +29,7 @@ export default function Home() {
 
   return (
     <View style={styles.root}>
-      <FlatList
+      <FlowList
         data={home.homeList}
         style={styles.flatList}
         renderItem={RenderItem}
