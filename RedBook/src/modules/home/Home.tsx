@@ -6,7 +6,7 @@ import { homeState } from '../../stores/HomeStore';
 import { requestHomeList, resetPage } from '../../stores/HomeStore';
 import RenderItem from './RenderItem';
 import FlowList from '../../components/FlowList/FlowList';
-import Heart from '../../components/Heart';
+import RenderTitle from './components/TitleBar';
 
 export default function Home() {
   
@@ -34,6 +34,12 @@ export default function Home() {
 
   return (
     <View style={styles.root}>
+      <RenderTitle 
+        tab={1}
+        onTabChange={(tab) => {
+          console.log(tab);
+        }}
+      />
       <FlowList
         data={home.homeList}
         style={styles.flatList}
