@@ -7,11 +7,14 @@ import { requestHomeList, resetPage } from '../../stores/HomeStore';
 import RenderItem from './RenderItem';
 import FlowList from '../../components/FlowList/FlowList';
 import RenderTitle from './components/TitleBar';
+import CategoryList from './components/CategoryList';
 
 export default function Home() {
   
   const dispatch = useDispatch<any>();
   const home = useSelector(homeState);
+
+  const categoryList = home.DEFAULT_CATEGORY_LIST.filter(item => item.isAdd);
 
   useEffect(()=>{
     dispatch(requestHomeList());
@@ -45,12 +48,19 @@ export default function Home() {
         style={styles.flatList}
         renderItem={RenderItem}
         numColumns={2}
+        keyExtrator={(item: ArticleSimple) => item.id}
         contentContainerStyle={styles.container}
         refreshing={home.refreshing}// 下拉刷新
         onRefresh={refreshNewData}// 下拉刷新
         onEndReachedThreshold={0.1}// 触底加载
         onEndReached={loadMoreData}// 触底加载
         ListFooterComponent={<Footer/>}
+        ListHeaderComponent={<CategoryList 
+          categoryList={categoryList} 
+          onCategoryChange={(category)=>{
+            console.log(category);
+          }}
+        />}
       />
     </View>
   )
@@ -65,7 +75,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0f0f0'
   },
   container:{
-    paddingTop: 6
+    // paddingTop: 6
   },
   flatList: {
     width: '100%',
