@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { StackNavigationProp } from "@react-navigation/stack";
 import {useNavigation} from '@react-navigation/native'
-import { Image, LayoutAnimation, Linking, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native";
+import { Image, LayoutAnimation, Linking, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 import { AllStyles } from './Login';
 import { props } from './RenderQuickLogin'

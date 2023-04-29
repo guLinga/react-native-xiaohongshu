@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { login } from "../api/apis";
 import { save } from '../utils/Storage';
 import { ToastAndroid } from "react-native";
+import Toast from "../components/widget/Toast";
 
 // 登录
 export const requestLogin = createAsyncThunk('users/requestLogin', async ({name,pwd}:{name:string,pwd:string}) => {
@@ -34,7 +35,7 @@ const userStore = createSlice({
         console.log('payload',data);
         if(!data){
           state.state = false;
-          ToastAndroid.show("登录失败，请检查用户名和密码", ToastAndroid.LONG);
+          Toast.show("登录失败，请检查用户名和密码");
         }else{
           state.state = true;
           state.userInfo = data;// 储存用户登录信息
@@ -44,7 +45,7 @@ const userStore = createSlice({
       // 登录失败
       .addCase(requestLogin.rejected, (state) => {
         state.state = false;
-        ToastAndroid.show("登录失败，请检查网络", ToastAndroid.LONG);
+        Toast.show("登录失败，请检查网络");
       })
   }
 })
