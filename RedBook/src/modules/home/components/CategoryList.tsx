@@ -1,5 +1,8 @@
-import React,{useState, useEffect} from 'react'
+import React,{useState, useEffect, useRef} from 'react'
 import { View, StyleSheet, ScrollView, Image, TouchableOpacity, Text } from 'react-native'
+
+import { CategoryModalRed } from './CategoryModal';
+import CategoryModal from './CategoryModal';
 
 import iconArrow from '../../../assets/icon_arrow.png'
 
@@ -9,6 +12,8 @@ type props = {
 }
 
 export default function CategoryList({categoryList, onCategoryChange}:props) {
+
+  const modalRef = useRef<CategoryModalRed>(null);
 
   const [category,setCategory] = useState<Category>();
 
@@ -45,9 +50,15 @@ export default function CategoryList({categoryList, onCategoryChange}:props) {
           })
         }
       </ScrollView>
-      <TouchableOpacity style={styles.openBtn}>
+      <TouchableOpacity 
+        style={styles.openBtn}
+        onPress={()=>{
+          modalRef.current?.show();
+        }}
+      >
         <Image style={styles.openImg} source={iconArrow} />
       </TouchableOpacity>
+      <CategoryModal ref={modalRef} />
     </View>
   )
 }

@@ -2,7 +2,7 @@ import React,{useEffect} from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { homeState } from '../../stores/HomeStore';
+import { getCategoryList, homeState } from '../../stores/HomeStore';
 import { requestHomeList, resetPage } from '../../stores/HomeStore';
 import RenderItem from './RenderItem';
 import FlowList from '../../components/FlowList/FlowList';
@@ -13,8 +13,13 @@ export default function Home() {
   
   const dispatch = useDispatch<any>();
   const home = useSelector(homeState);
+  
+  // 初始化 HomeStore 中 categoryList 数据
+  useEffect(()=>{
+    dispatch(getCategoryList())
+  },[])
 
-  const categoryList = home.DEFAULT_CATEGORY_LIST.filter(item => item.isAdd);
+  const categoryList = home.CategoryList.filter(item => item.isAdd);
 
   useEffect(()=>{
     dispatch(requestHomeList());
