@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { homeList } from '../api/apis';
+import { load } from '../utils/Storage';
 
 // 首页列表
 export const requestHomeList = createAsyncThunk('home/requestHomeList',async (_,store:any) => {
@@ -11,17 +12,30 @@ export const requestHomeList = createAsyncThunk('home/requestHomeList',async (_,
   return data;
 })
 
+// 返回 DEFAULT_CATEGORY_LIST 数据
+export const getCategoryList = createAsyncThunk('home/getCategoryList', async (_,store:any) => {
+  const cacheListStr = await load('categoryList');
+  if(cacheListStr){
+    const cacheList = JSON.parse(cacheListStr);
+    return cacheList;
+  }else{
+    return store.home.DEFAULT_CATEGORY_LIST
+  }
+})
+
 const initialState:{
   SIZE: 10
   page: number,
   homeList: ArticleSimple[],
   refreshing: boolean,
+  CategoryList: Category[],
   DEFAULT_CATEGORY_LIST: Category[]
 } = {
   SIZE: 10,
   page: 1,
   homeList: [],
   refreshing: false,
+  CategoryList: [],
   DEFAULT_CATEGORY_LIST: [
     // 默认添加频道
     { name: '推荐', default: true, isAdd: true },
@@ -105,9 +119,17 @@ const HomeStore = createSlice({
       state.refreshing = false;
     })
     // 首页列表失败
-    builder.addCase(requestHomeList.rejected,(state,action)=>{
+    builder.addCase(requestHomeList.rejected,(state)=>{
       // console.log('error',state,action.payload);
       state.refreshing = false;
+    })
+
+    // 
+    builder.addCase(getCategoryList.fulfilled, (state,action) => {
+      state.CategoryList = action.payload;
+    })
+    builder.addCase(getCategoryList.rejected, (_,action) => {
+      console.log('error',action.payload);
     })
   }
 })
